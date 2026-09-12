@@ -1,9 +1,9 @@
 <script lang="ts">
   import * as Item from "$lib/components/ui/item/index.js";
-  import { Button } from "$lib/components/ui/button/index.js";
   import { Separator } from "$lib/components/ui/separator/index.js";
+  import RankingItemDialog from "$lib/RankingItemDialog.svelte";
+  let { stock, ranking } = $props();
 
-  let { stockName, ranking, score } = $props();
 </script>
 
 <div class="flex w-full flex-col gap-6">
@@ -14,16 +14,16 @@
       <Separator />
       Overall score:
       <br/>
-      {score}
+      {stock.score}
     </div>
     <Item.Content>
-      <Item.Title>{stockName}</Item.Title>
+      <Item.Title>{stock.stockName}</Item.Title>
       <Item.Description
 	>50%</Item.Description
 	      >
     </Item.Content>
     <Item.Actions>
-      <Button variant="outline" size="sm">Details</Button>
+      <RankingItemDialog stock={stock} ranking={ranking}/>
     </Item.Actions>
   </Item.Root>
 </div>

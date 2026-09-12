@@ -8,26 +8,14 @@
 
   let searchQuery = $state("");
   let filterTrayOpen = $state(false);
+  
+  const data = [
+    { companyName: "Microsoft", stockName: "MSFT", score: 100 },
+    { companyName: "Google", stockName: "GOGL", score: 50 },
+    { companyName: "Apple", stockName: "AAPL", score: 20 },
+    { companyName: "NVidia", stockName: "NVIDIA", score: 10 },
+  ];
 </script>
-
-<!-- <div class="w-200 m-auto mt-10 h-[calc(100vh-2.5rem)] bg-red-100"> -->
-<!--   <div class="flex w-full flex-col"> -->
-<!--     <Item.Root variant="outline"> -->
-<!--       <Item.Content> -->
-<!-- 	<Item.Title>Sustainability Ranking</Item.Title> -->
-<!-- 	<Item.Description -->
-<!-- 	  >A simple item with title and description.</Item.Description -->
-<!-- 						      > -->
-<!--       </Item.Content> -->
-<!--       <Item.Actions> -->
-<!-- 	<Button variant="outline" size="sm">Action</Button> -->
-<!--       </Item.Actions> -->
-<!--     </Item.Root> -->
-<!--   </div> -->
-
-<!--   <RankingList/> -->
-<!-- </div> -->
-
 
 <div class="w-200 m-auto my-10 h-[calc(100vh-2.5rem)] flex flex-col">
   <div class="flex w-full flex-col">
@@ -48,5 +36,5 @@
     <FilterTray/>
   {/if}
 
-  <RankingList searchQuery={searchQuery}/>
+  <RankingList searchQuery={searchQuery} data={data} />
 </div>

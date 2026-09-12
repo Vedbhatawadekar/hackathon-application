@@ -4,13 +4,12 @@
   import { Button } from "$lib/components/ui/button/index.js";
 </script>
 
-
 <div class="flex w-full flex-col">
   <Item.Root variant="outline">
     <Item.Content>
       <Item.Title>Filter</Item.Title>
       <Item.Description
-	>A simple item with title and description.</Item.Description>
+	>Here are properties you can filter</Item.Description>
     </Item.Content>
   </Item.Root>
 </div>

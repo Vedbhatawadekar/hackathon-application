@@ -14,21 +14,23 @@
       >
       Details
     </Dialog.Trigger>
-    <Dialog.Content class="sm:max-w-[425px]">
+    <Dialog.Content class="sm:max-w-[600px] h-200 p-10">
       <Dialog.Header>
-	<Dialog.Title>{stock.stockName}</Dialog.Title>
-	<Dialog.Description>
+	<Dialog.Title class="text-5xl">{stock.stockName}</Dialog.Title>
+	<Dialog.Description class="text-xl">
 	  Overall score: #{ranking}
 	</Dialog.Description>
       </Dialog.Header>
       <DialogTable stock={stock}/>
       <Dialog.Footer>
-	<Dialog.Close
-	  type="button"
-	  class={buttonVariants({ variant: "outline" })}
-	  >
-	  Close
-	</Dialog.Close>
+	<!-- <Dialog.Close -->
+	<!--   type="button" -->
+	<!--   class={buttonVariants({ variant: "outline" })} -->
+	<!--   > -->
+	<!--   Close -->
+	<!-- </Dialog.Close> -->
+
+
       </Dialog.Footer>
     </Dialog.Content>
   </form>

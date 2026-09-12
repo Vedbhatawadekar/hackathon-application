@@ -8,7 +8,7 @@
 
 <div class="flex w-full flex-col gap-6">
   <Item.Root variant="outline" class="w-full">
-    <div class="text-center">
+    <div class="text-center p-3">
       <p class="text-3xl">#{ranking}</p>
       
       <Separator />

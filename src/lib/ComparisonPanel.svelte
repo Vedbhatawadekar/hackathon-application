@@ -40,6 +40,10 @@
 		return `${new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(value)} tCO₂e`;
 	}
 
+	function scoreText(value: number | null): string {
+		return value === null ? 'N/A' : `${Number(value.toFixed(1))} / 100`;
+	}
+
 	function drop(event: DragEvent) {
 		event.preventDefault();
 		dragOver = false;
@@ -106,9 +110,9 @@
 					Net score
 				</p>
 				<div class="min-h-18 rounded-xl border bg-background p-3">
-					<p class="text-sm font-medium">Overall net impact</p>
+					<p class="text-sm font-medium">Net impact score</p>
 					<p class="mt-1 text-lg font-semibold">
-						{company.score === null ? 'N/A' : `${company.score}%`}
+						{scoreText(company.score)}
 					</p>
 				</div>
 

@@ -10,11 +10,6 @@
 		UprightCompany
 	} from '$lib/types.js';
 
-	function percentage(value: string): number | null {
-		const parsed = Number.parseFloat(value.replace('%', ''));
-		return Number.isFinite(parsed) ? parsed : null;
-	}
-
 	function text(value: unknown): string {
 		return value === null || value === undefined ? '' : String(value);
 	}
@@ -71,18 +66,31 @@
 		};
 	}
 
-	const data: RankedCompany[] = (sp500Companies as unknown as Sp500CompanyRecord[])
-		.map((record) => {
-			const esg = normalizeUpright(record);
-			return {
-				id: record.ticker,
-				companyName: record.security,
-				stockName: record.ticker,
-				score: percentage(esg.net_impact_ratio || esg.screener_net_impact_ratio),
-				esg,
-				co2: record.co2
-			};
-		})
+	const unrankedCompanies = (sp500Companies as unknown as Sp500CompanyRecord[]).map((record) => {
+		const esg = normalizeUpright(record);
+		return {
+			id: record.ticker,
+			companyName: record.security,
+			stockName: record.ticker,
+			score: record.scores.environmental_composite_score,
+			percentile: null,
+			esg,
+			co2: record.co2
+		};
+	});
+
+	const scores = unrankedCompanies.flatMap((company) =>
+		company.score === null ? [] : [company.score]
+	);
+
+	function percentile(score: number | null): number | null {
+		if (score === null || scores.length < 2) return null;
+		const lowerScores = scores.filter((candidate) => candidate < score).length;
+		return (lowerScores / (scores.length - 1)) * 100;
+	}
+
+	const data: RankedCompany[] = unrankedCompanies
+		.map((company) => ({ ...company, percentile: percentile(company.score) }))
 		.sort((left, right) => (right.score ?? -Infinity) - (left.score ?? -Infinity));
 
 	let leftCompany = $state<RankedCompany | null>(null);
@@ -117,7 +125,7 @@
 </script>
 
 <main
-	class="mx-auto grid min-h-screen max-w-[112rem] grid-cols-1 gap-4 p-4 xl:h-screen xl:min-h-0 xl:grid-cols-[minmax(34rem,42rem)_minmax(42rem,1fr)]"
+	class="mx-auto grid min-h-screen max-w-[112rem] grid-cols-1 gap-5 p-4 sm:p-6 xl:h-screen xl:min-h-0 xl:grid-cols-[minmax(34rem,42rem)_minmax(42rem,1fr)]"
 >
 	<Ranking {data} {addToComparison} {removeFromComparison} {comparisonList} />
 	<section class="grid min-h-0 grid-cols-1 gap-3 sm:grid-cols-2" aria-label="Company comparison">

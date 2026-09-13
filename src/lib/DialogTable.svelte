@@ -14,12 +14,6 @@
 		return value?.trim() || '0';
 	}
 
-	function impactClass(value: string): string {
-		if (value.startsWith('+')) return 'text-emerald-700 dark:text-emerald-400';
-		if (value.startsWith('-')) return 'text-rose-700 dark:text-rose-400';
-		return 'text-muted-foreground';
-	}
-
 	function formattedDate(value: string): string {
 		if (!value) return 'Not available';
 		const date = new Date(value);
@@ -35,6 +29,29 @@
 	function formattedEmissions(value: number | null): string {
 		if (value === null || !Number.isFinite(value)) return 'Not available';
 		return `${new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(value)} tCO₂e`;
+	}
+
+	function scoreText(value: number | null): string {
+		return value === null ? 'Not available' : `${Number(value.toFixed(1))} / 100`;
+	}
+
+	function ordinal(value: number): string {
+		const remainder = value % 100;
+		if (remainder >= 11 && remainder <= 13) return `${value}th`;
+		switch (value % 10) {
+			case 1:
+				return `${value}st`;
+			case 2:
+				return `${value}nd`;
+			case 3:
+				return `${value}rd`;
+			default:
+				return `${value}th`;
+		}
+	}
+
+	function percentileText(value: number | null): string {
+		return value === null ? 'Not available' : ordinal(Math.round(value));
 	}
 
 	function sourceLabel(value: string): string {
@@ -86,15 +103,15 @@
 <div>
 	<div class="grid grid-cols-2 gap-3 md:grid-cols-4">
 		<div class="rounded-lg border p-3">
-			<p class="text-xs tracking-wide text-muted-foreground uppercase">Net impact ratio</p>
-			<p class={`mt-1 text-2xl font-semibold ${impactClass(stock.esg.net_impact_ratio)}`}>
-				{shown(stock.esg.net_impact_ratio)}
+			<p class="text-xs tracking-wide text-muted-foreground uppercase">Net impact score</p>
+			<p class="mt-1 text-2xl font-semibold">
+				{scoreText(stock.score)}
 			</p>
 		</div>
 		<div class="rounded-lg border p-3">
-			<p class="text-xs tracking-wide text-muted-foreground uppercase">Global rank</p>
+			<p class="text-xs tracking-wide text-muted-foreground uppercase">S&amp;P 500 percentile</p>
 			<p class="mt-1 text-2xl font-semibold">
-				Top {shown(stock.esg.rank_top_percent)}
+				{percentileText(stock.percentile)}
 			</p>
 		</div>
 		<div class="rounded-lg border p-3">

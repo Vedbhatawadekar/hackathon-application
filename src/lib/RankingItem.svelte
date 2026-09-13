@@ -31,7 +31,7 @@
 	function formattedScore() {
 		if (displayScore === null) return 'N/A';
 		const value = Number(displayScore.toFixed(1));
-		return selectedMetric === 'Overall' ? `${value}%` : `${value} ¢/$`;
+		return selectedMetric === 'Overall' ? `${value} / 100` : `${value} ¢/$`;
 	}
 
 	function dragStart(event: DragEvent) {

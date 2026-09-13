@@ -34,6 +34,10 @@ export interface CarbonData {
 	};
 }
 
+export interface EnvironmentalScores {
+	environmental_composite_score: number | null;
+}
+
 export interface Sp500CompanyRecord {
 	ticker: string;
 	security: string;
@@ -41,6 +45,7 @@ export interface Sp500CompanyRecord {
 	gics_sub_industry: string;
 	headquarters_location: string;
 	co2: CarbonData;
+	scores: EnvironmentalScores;
 	upright: Partial<UprightCompany> & {
 		revenue_musd?: number | string | null;
 		is_estimated?: boolean;
@@ -77,6 +82,7 @@ export interface RankedCompany {
 	companyName: string;
 	stockName: string;
 	score: number | null;
+	percentile: number | null;
 	esg: UprightCompany;
 	co2: CarbonData;
 }

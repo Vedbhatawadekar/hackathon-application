@@ -37,7 +37,7 @@
 	function dragStart(event: DragEvent) {
 		if (!event.dataTransfer) return;
 		event.dataTransfer.effectAllowed = 'copy';
-		event.dataTransfer.setData('application/x-ranked-company', stock.esg.upright_url);
+		event.dataTransfer.setData('application/x-ranked-company', stock.id);
 		event.dataTransfer.setData('text/plain', stock.companyName);
 	}
 </script>

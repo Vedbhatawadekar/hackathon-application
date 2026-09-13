@@ -3,6 +3,8 @@ import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
+const basePath = process.env.BASE_PATH as `/${string}` | undefined;
+
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
@@ -13,7 +15,7 @@ export default defineConfig({
 			},
 			adapter: adapter(),
 			paths: {
-				base: process.env.BASE_PATH ?? ''
+				base: basePath ?? ''
 			}
 		})
 	],

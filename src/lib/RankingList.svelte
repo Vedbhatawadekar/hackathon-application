@@ -2,7 +2,7 @@
   import RankingItem from "$lib/RankingItem.svelte";
   import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
 
-  let { searchQuery, data } = $props();
+  let { searchQuery, data, setHover, addToComparison, removeFromComparison, comparisonList } = $props();
   
   function stockMatchesSearchQuery(stock) {
     return searchQuery === "" || stock.companyName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -13,7 +13,7 @@
   <ScrollArea class="rounded-md border h-full">
     {#each data as stock, index}
       {#if stockMatchesSearchQuery(stock)}
-	<RankingItem stock={stock} ranking={index + 1} />
+	<RankingItem stock={stock} ranking={index + 1} setHover={setHover} addToComparison={addToComparison} removeFromComparison={removeFromComparison} comparisonList={comparisonList}/>
       {/if}
     {/each}
   </ScrollArea>
